@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Regular.woff2') format('woff2'),
+    url('./assets/fonts/Satoshi-Regular.woff') format('woff'),
+    url('./assets/fonts/Satoshi-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Bold.woff2') format('woff2'),
+    url('./assets/fonts/Satoshi-Bold.woff') format('woff'),
+    url('./assets/fonts/Satoshi-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Platform';
+  src: url('./assets/Platform/Platform-Regular.woff2') format('woff2'),
+    url('./assets/Platform/Platform-Regular.woff') format('woff'),
+    url('./assets/Platform/Platform-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Platform';
+  src: url('./assets/Platform/Platform-Bold.woff2') format('woff2'),
+    url('./assets/Platform/Platform-Bold.woff') format('woff'),
+    url('./assets/Platform/Platform-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
