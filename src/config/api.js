@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Crear instancia de axios con configuración base
 const api = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: 'https://cursos-server-production.up.railway.app/api',
     headers: {
         'Content-Type': 'application/json',
     },
