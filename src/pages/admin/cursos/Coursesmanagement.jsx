@@ -30,7 +30,17 @@ const CoursesManagement = () => {
     name: '', tutor: '', category: '', status: 'Borrador', description: '',
   });
 
-  const categories = ['3D y Animación', 'Diseño Web y App', 'Ilustración', 'Fotografía', 'Marketing', 'Programación'];
+  const categories = [
+    'Matemáticas',
+    'Razonamiento',
+    'Comunicación',
+    'Ciencias',
+    'Ciencias Sociales',
+    'Humanidades',
+    'Aptitud Académica',
+    'Cultura General',
+    'Otros'
+  ];
 
   useEffect(() => {
     loadInitialData();

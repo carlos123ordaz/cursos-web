@@ -26,12 +26,15 @@ const TutorDialog = ({
     saving = false,
 }) => {
     const specialties = [
-        '3D y Animación',
-        'Diseño Web y App',
-        'Ilustración',
-        'Fotografía',
-        'Marketing',
-        'Programación',
+        'Matemáticas',
+        'Razonamiento',
+        'Comunicación',
+        'Ciencias',
+        'Ciencias Sociales',
+        'Humanidades',
+        'Aptitud Académica',
+        'Cultura General',
+        'Otros'
     ];
 
     const documentTypes = [
