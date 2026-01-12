@@ -7,33 +7,23 @@ import {
     IconButton,
     Tabs,
     Tab,
-    List,
-    ListItem,
-    ListItemText,
-    Paper,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
     Chip,
     CircularProgress,
     Alert,
 } from '@mui/material';
-import {
-    Check,
-    Clock,
-    FileText,
-    Download,
-    PlayCircle,
-    ChevronDown,
-    ArrowLeft,
-} from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../contexts/Authcontext';
-import BunnyVideoPlayer from '../../components/user/BunnyVideoPlayer';
+
+// Services
 import courseService from '../../services/courseService';
-import moduleService from '../../services/moduleService';
 import lessonService from '../../services/lessonService';
 import studentService from '../../services/studentService';
 import enrollmentService from '../../services/enrollmentService';
+import CourseSidebar from '../../components/user/courses/CourseSidebar';
+import CourseExercises from '../../components/user/courses/CourseExercises';
+import CourseContent from '../../components/user/courses/CourseContent';
+
+
 
 const CoursePlayer = () => {
     const { id: courseId } = useParams();
@@ -212,6 +202,7 @@ const CoursePlayer = () => {
         return `${minutes}:${secs.toString().padStart(2, '0')}`;
     };
 
+    // Loading State
     if (loading) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
@@ -220,6 +211,7 @@ const CoursePlayer = () => {
         );
     }
 
+    // Error State
     if (error || !course) {
         return (
             <Container maxWidth="md" sx={{ py: 8 }}>
@@ -323,241 +315,43 @@ const CoursePlayer = () => {
                             }
                         }}
                     >
-
                         <Tab label="Contenido del Curso" value={0} />
+                        <Tab label="Ejercicios" value={1} />
                     </Tabs>
                 </Box>
 
                 {/* Main Content */}
-                <Box sx={{ display: 'flex', gap: 3 }}>
-                    {/* Left Side - Video Player */}
-                    <Box sx={{ flex: 1 }}>
-                        <Paper sx={{ borderRadius: 2, overflow: 'hidden', mb: 3, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-                            {currentLesson ? (
-                                <>
-                                    {/* Video Player */}
-                                    <Box sx={{ position: 'relative', bgcolor: '#000', aspectRatio: '16/9' }}>
-                                        {currentLesson.videoId ? (
-                                            <BunnyVideoPlayer
-                                                videoId={currentLesson.videoId}
-                                                libraryId="578582"
-                                                title={currentLesson.title}
-                                                responsive={true}
-                                                preload={true}
-                                            />
-                                        ) : (
-                                            <Box sx={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                height: '100%',
-                                                color: 'white'
-                                            }}>
-                                                <Typography>No hay video disponible para esta lección</Typography>
-                                            </Box>
-                                        )}
-                                    </Box>
-                                    <Box sx={{ p: 3, bgcolor: 'white' }}>
-                                        <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                                            {currentLesson.title}
-                                        </Typography>
-                                        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', mb: 2 }}>
-                                            <Chip
-                                                icon={<Clock size={14} />}
-                                                label={formatDuration(currentLesson.duration)}
-                                                size="small"
-                                                sx={{ bgcolor: '#f5f5f5' }}
-                                            />
-                                            {isLessonCompleted(currentLesson._id) && (
-                                                <Chip
-                                                    icon={<Check size={14} />}
-                                                    label="Completada"
-                                                    size="small"
-                                                    sx={{ bgcolor: '#4caf500a', color: '#4caf50' }}
-                                                />
-                                            )}
-                                            {currentLesson.published ? (
-                                                <Chip
-                                                    label="Publicado"
-                                                    size="small"
-                                                    sx={{ bgcolor: '#4caf500a', color: '#4caf50' }}
-                                                />
-                                            ) : (
-                                                <Chip
-                                                    label="Borrador"
-                                                    size="small"
-                                                    sx={{ bgcolor: '#9e9e9e0a', color: '#9e9e9e' }}
-                                                />
-                                            )}
-                                        </Box>
-                                        <Typography sx={{ color: 'text.secondary', lineHeight: 1.7, mb: 2 }}>
-                                            {currentLesson.description || 'No hay descripción disponible para esta lección.'}
-                                        </Typography>
-                                        {!isLessonCompleted(currentLesson._id) && (
-                                            <Box sx={{ display: 'flex', gap: 2 }}>
-                                                <Chip
-                                                    icon={<Check size={16} />}
-                                                    label="Marcar como completada"
-                                                    onClick={handleCompleteLesson}
-                                                    sx={{
-                                                        cursor: 'pointer',
-                                                        bgcolor: '#00acc1',
-                                                        color: 'white',
-                                                        fontWeight: 600,
-                                                        '&:hover': { bgcolor: '#00838f' }
-                                                    }}
-                                                />
-                                            </Box>
-                                        )}
-                                    </Box>
-                                </>
-                            ) : (
-                                <Box sx={{ p: 8, textAlign: 'center' }}>
-                                    <PlayCircle size={64} color="#ccc" style={{ margin: '0 auto 16px' }} />
-                                    <Typography variant="h6" sx={{ mb: 1, color: 'text.secondary' }}>
-                                        Selecciona una lección para comenzar
-                                    </Typography>
-                                </Box>
-                            )}
-                        </Paper>
-
-                        {/* Course Resources */}
-                        {currentLesson?.resources && currentLesson.resources.length > 0 && (
-                            <Paper sx={{ borderRadius: 2, p: 3, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-                                <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
-                                    Materiales de la lección
-                                </Typography>
-                                <List sx={{ bgcolor: '#f8f9fa', borderRadius: 1 }}>
-                                    {currentLesson.resources.map((resource, index) => (
-                                        <ListItem
-                                            key={resource._id || index}
-                                            sx={{
-                                                borderBottom: index < currentLesson.resources.length - 1 ? '1px solid #e0e0e0' : 'none',
-                                                '&:hover': { bgcolor: '#f0f0f0' }
-                                            }}
-                                        >
-                                            <FileText size={20} color="#666" style={{ marginRight: 16 }} />
-                                            <ListItemText
-                                                primary={resource.name || resource.title}
-                                                secondary={resource.type || 'Archivo'}
-                                                primaryTypographyProps={{ fontWeight: 500 }}
-                                            />
-                                            <IconButton
-                                                size="small"
-                                                component="a"
-                                                href={resource.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <Download size={18} />
-                                            </IconButton>
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            </Paper>
+                <Box sx={{ display: 'flex', gap: 3, alignItems: 'flex-start' }}>
+                    {/* Left Side - Dynamic Content */}
+                    <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>
+                        {activeTab === 0 ? (
+                            <CourseContent
+                                currentLesson={currentLesson}
+                                isLessonCompleted={isLessonCompleted}
+                                handleCompleteLesson={handleCompleteLesson}
+                                formatDuration={formatDuration}
+                            />
+                        ) : (
+                            <CourseExercises
+                                currentLesson={currentLesson}
+                                enrollment={enrollment}
+                            />
                         )}
                     </Box>
 
                     {/* Right Sidebar - Course Content */}
-                    <Box sx={{ width: 400 }}>
-                        <Paper sx={{
-                            borderRadius: 2,
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                            maxHeight: 'calc(100vh - 200px)',
-                            overflowY: 'auto'
-                        }}>
-                            <Box sx={{ p: 2, borderBottom: '1px solid #e0e0e0', bgcolor: '#f8f9fa', position: 'sticky', top: 0, zIndex: 1 }}>
-                                <Typography sx={{
-                                    fontSize: '0.75rem',
-                                    fontWeight: 600,
-                                    color: 'text.secondary',
-                                    textTransform: 'uppercase'
-                                }}>
-                                    Contenido del Curso
-                                </Typography>
-                                <Typography sx={{ fontSize: '0.875rem', mt: 0.5 }}>
-                                    {completedLessons} de {totalLessons} lecciones completadas
-                                </Typography>
-                            </Box>
-                            {modules.map((module) => (
-                                <Accordion
-                                    key={module._id}
-                                    expanded={expandedModule === module._id}
-                                    onChange={() => setExpandedModule(expandedModule === module._id ? null : module._id)}
-                                    sx={{
-                                        boxShadow: 'none',
-                                        '&:before': { display: 'none' },
-                                        borderBottom: '1px solid #e0e0e0'
-                                    }}
-                                >
-                                    <AccordionSummary expandIcon={<ChevronDown size={20} />}>
-                                        <Box sx={{ flex: 1 }}>
-                                            <Typography sx={{ fontWeight: 600, fontSize: '0.9rem', mb: 0.5 }}>
-                                                {module.title}
-                                            </Typography>
-                                            <Typography sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>
-                                                {module.lessons.length} lecciones • {module.lessons.filter(l => isLessonCompleted(l._id)).length} completadas
-                                            </Typography>
-                                        </Box>
-                                    </AccordionSummary>
-                                    <AccordionDetails sx={{ p: 0 }}>
-                                        <List sx={{ py: 0 }}>
-                                            {module.lessons.map((lesson) => {
-                                                const isCompleted = isLessonCompleted(lesson._id);
-                                                const isCurrent = currentLesson?._id === lesson._id;
-
-                                                return (
-                                                    <ListItem
-                                                        key={lesson._id}
-                                                        button
-                                                        onClick={() => handleLessonClick(lesson)}
-                                                        sx={{
-                                                            py: 1.5,
-                                                            px: 3,
-                                                            bgcolor: isCurrent ? '#ff57220a' : 'transparent',
-                                                            borderLeft: isCurrent ? '3px solid #ff5722' : '3px solid transparent',
-                                                            '&:hover': { bgcolor: isCurrent ? '#ff57220a' : '#f5f5f5' }
-                                                        }}
-                                                    >
-                                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flex: 1 }}>
-                                                            <Box sx={{
-                                                                width: 32,
-                                                                height: 32,
-                                                                borderRadius: '50%',
-                                                                bgcolor: isCurrent ? '#ff5722' : isCompleted ? '#4caf50' : '#f5f5f5',
-                                                                color: isCurrent || isCompleted ? 'white' : 'text.secondary',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                flexShrink: 0
-                                                            }}>
-                                                                {isCompleted ? <Check size={16} /> : <PlayCircle size={16} />}
-                                                            </Box>
-                                                            <Box sx={{ flex: 1, minWidth: 0 }}>
-                                                                <Typography sx={{
-                                                                    fontSize: '0.875rem',
-                                                                    fontWeight: isCurrent ? 600 : 400,
-                                                                    mb: 0.5,
-                                                                    overflow: 'hidden',
-                                                                    textOverflow: 'ellipsis',
-                                                                    whiteSpace: 'nowrap'
-                                                                }}>
-                                                                    {lesson.title}
-                                                                </Typography>
-                                                                <Typography sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>
-                                                                    <Clock size={12} style={{ verticalAlign: 'middle', marginRight: 4 }} />
-                                                                    {formatDuration(lesson.duration)}
-                                                                </Typography>
-                                                            </Box>
-                                                        </Box>
-                                                    </ListItem>
-                                                );
-                                            })}
-                                        </List>
-                                    </AccordionDetails>
-                                </Accordion>
-                            ))}
-                        </Paper>
+                    <Box sx={{ flexShrink: 0, width: 380 }}>
+                        <CourseSidebar
+                            modules={modules}
+                            completedLessons={completedLessons}
+                            totalLessons={totalLessons}
+                            expandedModule={expandedModule}
+                            setExpandedModule={setExpandedModule}
+                            isLessonCompleted={isLessonCompleted}
+                            currentLesson={currentLesson}
+                            handleLessonClick={handleLessonClick}
+                            formatDuration={formatDuration}
+                        />
                     </Box>
                 </Box>
             </Container>

@@ -389,8 +389,7 @@ const CourseDetail = () => {
         <Tabs value={activeTab} onChange={(e, v) => setActiveTab(v)}
           sx={{ borderBottom: 1, borderColor: 'divider', '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, fontSize: '1rem' } }}>
           <Tab label="Información General" />
-          <Tab label={`Contenido del Curso (${modules.length} módulos)`} />
-          <Tab label="Configuración" />
+          <Tab label={'Contenido del Curso'} />
         </Tabs>
       </Card>
 

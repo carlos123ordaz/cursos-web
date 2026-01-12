@@ -53,7 +53,6 @@ const AdminLayout = () => {
     { text: 'Tutores', icon: <GraduationCap size={20} />, path: '/admin/tutors' },
     { text: 'Estudiantes', icon: <Users size={20} />, path: '/admin/students' },
     { text: 'Exámenes', icon: <FileText size={20} />, path: '/admin/exams' },
-    { text: 'Simulacros', icon: <ClipboardList size={20} />, path: '/admin/simulations' },
   ];
 
   const handleDrawerToggle = () => {
