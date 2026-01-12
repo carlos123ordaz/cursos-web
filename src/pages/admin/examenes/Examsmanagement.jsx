@@ -225,7 +225,7 @@ const ExamsManagement = () => {
       setMenuAnchor(null);
       return;
     }
-    
+
     if (window.confirm(`¿Estás seguro de eliminar este ${type === 'exam' ? 'examen' : 'simulacro'}?`)) {
       if (type === 'exam') {
         setExams(exams.filter((e) => e.id !== id));
@@ -324,14 +324,14 @@ const ExamsManagement = () => {
                         item.difficulty === 'Básico'
                           ? '#4caf500a'
                           : item.difficulty === 'Intermedio'
-                          ? '#00acc10a'
-                          : '#ff57220a',
+                            ? '#00acc10a'
+                            : '#ff57220a',
                       color:
                         item.difficulty === 'Básico'
                           ? '#4caf50'
                           : item.difficulty === 'Intermedio'
-                          ? '#00acc1'
-                          : '#ff5722',
+                            ? '#00acc1'
+                            : '#ff5722',
                       fontWeight: 600,
                     }}
                   />
@@ -493,7 +493,7 @@ const ExamsManagement = () => {
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid size={{xs:12}}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 fullWidth
                 label="Título"
@@ -501,7 +501,7 @@ const ExamsManagement = () => {
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               />
             </Grid>
-            <Grid size={{xs:12}}>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 fullWidth
                 select
@@ -516,7 +516,7 @@ const ExamsManagement = () => {
                 ))}
               </TextField>
             </Grid>
-            <Grid size={{xs:12}} md={4}>
+            <Grid size={{ xs: 12 }} md={4}>
               <TextField
                 fullWidth
                 label="Número de Preguntas"
@@ -525,7 +525,7 @@ const ExamsManagement = () => {
                 onChange={(e) => setFormData({ ...formData, questions: e.target.value })}
               />
             </Grid>
-            <Grid size={{xs:12}} md={4}>
+            <Grid size={{ xs: 12 }} md={4}>
               <TextField
                 fullWidth
                 label="Duración (minutos)"
@@ -534,7 +534,7 @@ const ExamsManagement = () => {
                 onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
               />
             </Grid>
-            <Grid size={{xs:12}} md={4}>
+            <Grid size={{ xs: 12 }} md={4}>
               <TextField
                 fullWidth
                 label="Puntuación Mínima (%)"
@@ -546,7 +546,7 @@ const ExamsManagement = () => {
               />
             </Grid>
             {editingItem?.type === 'simulation' && (
-              <Grid size={{xs:12}}>
+              <Grid size={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   select
@@ -562,7 +562,7 @@ const ExamsManagement = () => {
                 </TextField>
               </Grid>
             )}
-            <Grid size={{xs:12}} md={6}>
+            <Grid size={{ xs: 12 }} md={6}>
               <TextField
                 fullWidth
                 select
@@ -574,7 +574,7 @@ const ExamsManagement = () => {
                 <MenuItem value="Borrador">Borrador</MenuItem>
               </TextField>
             </Grid>
-            <Grid size={{xs:12}} md={6}>
+            <Grid size={{ xs: 12 }} md={6}>
               <FormControlLabel
                 control={
                   <Switch

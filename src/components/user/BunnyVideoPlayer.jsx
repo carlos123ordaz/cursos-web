@@ -1,7 +1,5 @@
-// BunnyVideoPlayer.jsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
-
 
 const BunnyVideoPlayer = ({
     videoId,
@@ -14,45 +12,35 @@ const BunnyVideoPlayer = ({
     muted = false
 }) => {
     // Construir URL del iframe
-    const embedUrl = `https://iframe.mediadelivery.net/play/${libraryId}/${videoId}`;
+    const embedUrl = `https://iframe.mediadelivery.net/embed/${libraryId}/${videoId}`;
 
     // Agregar parámetros
     const params = new URLSearchParams({
-        autoplay: autoplay ? '1' : '0',
-        loop: loop ? '1' : '0',
-        muted: muted ? '1' : '0',
-        preload: preload ? '1' : '0',
-        responsive: responsive ? '1' : '0',
+        autoplay: autoplay ? 'true' : 'false',
+        loop: loop ? 'true' : 'false',
+        muted: muted ? 'true' : 'false',
+        preload: preload ? 'true' : 'false',
+        responsive: responsive ? 'true' : 'false',
     });
 
     const fullUrl = `${embedUrl}?${params.toString()}`;
 
     return (
-        <Box
-            sx={{
-                position: 'relative',
+        <iframe
+            src={fullUrl}
+            loading="lazy"
+            style={{
+                border: 'none',
+                position: 'absolute',
+                top: 0,
+                left: 0,
                 width: '100%',
-                aspectRatio: '16/9',
-                bgcolor: '#000',
-                borderRadius: 2,
-                overflow: 'hidden',
+                height: '100%',
             }}
-        >
-            <iframe
-                src={fullUrl}
-                loading="lazy"
-                style={{
-                    border: 'none',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                }}
-                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-                allowFullScreen
-            />
-        </Box>
+            allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+            allowFullScreen={true}
+            title={title || 'Video player'}
+        />
     );
 };
 

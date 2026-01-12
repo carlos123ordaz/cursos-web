@@ -6,8 +6,6 @@ import PublicRoute from './components/PublicRoute';
 import UserLayout from './layout/UserLayout';
 import AdminLayout from './layout/AdminLayout';
 import LoginPage from './pages/auth/LoginPage';
-import ExamsManagement from './pages/admin/Examsmanagement';
-import StudentsManagement from './pages/admin/Studentsmanagement';
 import TutorsManagement from './pages/admin/tutores/Tutorsmanagement';
 import AdminDashboard from './pages/admin/Admindashboard';
 import CourseDetail from './pages/admin/cursos/CourseDetail';
@@ -15,6 +13,8 @@ import CoursePlayer from './pages/user/CoursePlayer';
 import CoursesPage from './pages/user/CoursesPage';
 import CoursesManagement from './pages/admin/cursos/Coursesmanagement';
 import { AuthProvider } from './contexts/Authcontext';
+import StudentsManagement from './pages/admin/estudiantes/Studentsmanagement';
+import ExamsManagement from './pages/admin/examenes/Examsmanagement';
 
 const App = () => {
   return (

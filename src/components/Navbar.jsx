@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     AppBar,
@@ -11,15 +11,45 @@ import {
     InputBase,
     Badge,
     Avatar,
+    Menu,
+    MenuItem,
+    Divider,
 } from '@mui/material';
 import {
     Search,
     Bell,
     ChevronDown,
+    User,
+    Settings,
+    LogOut,
 } from 'lucide-react';
+import { useAuth } from '../contexts/Authcontext';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const { user, logout } = useAuth();
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleMenuClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleLogout = async () => {
+        handleMenuClose();
+        await logout();
+        navigate('/login');
+    };
+
+    const getInitials = () => {
+        if (!user) return 'U';
+        const firstName = user.firstName || '';
+        const lastName = user.lastName || '';
+        return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase() || 'U';
+    };
 
     return (
         <AppBar position="static" sx={{ bgcolor: '#1a1a1a', boxShadow: 'none' }}>
@@ -40,7 +70,6 @@ const Navbar = () => {
                         </Typography>
                         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                             <Button
-                                endIcon={<ChevronDown size={16} />}
                                 onClick={() => navigate('/')}
                                 sx={{
                                     color: 'white',
@@ -48,26 +77,9 @@ const Navbar = () => {
                                     fontWeight: 500,
                                 }}
                             >
-                                Cursos
+                                Mis Cursos
                             </Button>
-                            <Button
-                                sx={{
-                                    color: 'white',
-                                    textTransform: 'none',
-                                    fontWeight: 500,
-                                }}
-                            >
-                                Simulacros
-                            </Button>
-                            <Button
-                                sx={{
-                                    color: 'white',
-                                    textTransform: 'none',
-                                    fontWeight: 500,
-                                }}
-                            >
-                                Exámenes
-                            </Button>
+                            {/* Puedes agregar más botones según necesites */}
                         </Box>
                     </Box>
 
@@ -92,27 +104,64 @@ const Navbar = () => {
                                 }}
                             />
                         </Box>
-                        <Button
-                            onClick={() => navigate('/')}
-                            sx={{
-                                color: 'white',
-                                textTransform: 'none',
-                                fontWeight: 500,
-                            }}
-                        >
-                            Mis cursos
-                        </Button>
+
                         <IconButton sx={{ color: 'white' }}>
-                            <Badge badgeContent={3} color="error">
+                            <Badge badgeContent={0} color="error">
                                 <Bell size={20} />
                             </Badge>
                         </IconButton>
-                        <Avatar 
-                            sx={{ width: 36, height: 36, bgcolor: '#00acc1', cursor: 'pointer' }}
-                            onClick={() => navigate('/login')}
+
+                        <Avatar
+                            sx={{
+                                width: 36,
+                                height: 36,
+                                bgcolor: '#00acc1',
+                                cursor: 'pointer',
+                                fontWeight: 600,
+                                fontSize: '0.875rem',
+                            }}
+                            onClick={handleMenuClick}
                         >
-                            JD
+                            {getInitials()}
                         </Avatar>
+
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleMenuClose}
+                            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                            PaperProps={{
+                                sx: { mt: 1, minWidth: 200 }
+                            }}
+                        >
+                            {/* User Info */}
+                            <Box sx={{ px: 2, py: 1.5, borderBottom: '1px solid', borderColor: 'divider' }}>
+                                <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                                    {user?.firstName} {user?.lastName}
+                                </Typography>
+                                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                    {user?.email}
+                                </Typography>
+                            </Box>
+
+                            <MenuItem onClick={() => { handleMenuClose(); navigate('/profile'); }}>
+                                <User size={18} style={{ marginRight: 8 }} />
+                                Mi Perfil
+                            </MenuItem>
+
+                            <MenuItem onClick={() => { handleMenuClose(); navigate('/'); }}>
+                                <Settings size={18} style={{ marginRight: 8 }} />
+                                Mis Cursos
+                            </MenuItem>
+
+                            <Divider />
+
+                            <MenuItem onClick={handleLogout}>
+                                <LogOut size={18} style={{ marginRight: 8 }} />
+                                Cerrar Sesión
+                            </MenuItem>
+                        </Menu>
                     </Box>
                 </Toolbar>
             </Container>
