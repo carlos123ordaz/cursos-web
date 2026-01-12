@@ -72,7 +72,7 @@ const Navbar = () => {
                                 cursor: 'pointer',
                             }}
                         >
-                            PREDU.com
+                            EDUPREU.com
                         </Typography>
                         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                             <Button

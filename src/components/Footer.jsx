@@ -5,10 +5,10 @@ const Footer = () => {
     return (
         <Box sx={{ bgcolor: '#1a1a1a', color: 'white', py: 6, mt: 8 }}>
             <Container maxWidth="xl">
-                <Grid container spacing={4}>
+                {/* <Grid container spacing={4}>
                     <Grid size={{ xs: 12, md: 3 }}>
                         <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
-                            PREDU.com
+                            EDUPREU.com
                         </Typography>
                         <Typography sx={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.7)' }}>
                             Plataforma educativa para preparación universitaria
@@ -62,10 +62,10 @@ const Footer = () => {
                             </Link>
                         </Box>
                     </Grid>
-                </Grid>
+                </Grid> */}
                 <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.1)', mt: 4, pt: 3, textAlign: 'center' }}>
                     <Typography sx={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)' }}>
-                        © 2024 PREDU.com - Todos los derechos reservados
+                        © 2024 EDUPREU.com - Todos los derechos reservados
                     </Typography>
                 </Box>
             </Container>

@@ -117,7 +117,7 @@ const AdminLayout = () => {
         </Box>
         <Box>
           <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1 }}>
-            PREDU.com
+            EDUPREU.com
           </Typography>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
             Panel Admin

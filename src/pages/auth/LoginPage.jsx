@@ -115,7 +115,7 @@ const LoginPage = () => {
               fontSize: '1.25rem',
             }}
           >
-            PREDU.com
+            EDUPREU.com
           </Typography>
         </Container>
       </Box>
@@ -381,7 +381,7 @@ const LoginPage = () => {
             }}
           >
             <Typography sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
-              © 2026 PREDU.com Todos los derechos reservados.
+              © 2026 EDUPREU.com Todos los derechos reservados.
             </Typography>
             <Box sx={{ display: 'flex', gap: 3 }}>
               <Link
