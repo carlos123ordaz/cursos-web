@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
     AppBar,
     Toolbar,
@@ -18,15 +18,17 @@ import {
 import {
     Search,
     Bell,
-    ChevronDown,
     User,
     Settings,
     LogOut,
+    BookOpen,
+    FileText,
 } from 'lucide-react';
 import { useAuth } from '../contexts/Authcontext';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const { user, logout } = useAuth();
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -51,6 +53,10 @@ const Navbar = () => {
         return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase() || 'U';
     };
 
+    const isActive = (path) => {
+        return location.pathname === path;
+    };
+
     return (
         <AppBar position="static" sx={{ bgcolor: '#1a1a1a', boxShadow: 'none' }}>
             <Container maxWidth="xl">
@@ -68,18 +74,37 @@ const Navbar = () => {
                         >
                             PREDU.com
                         </Typography>
-                        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                             <Button
                                 onClick={() => navigate('/')}
+                                startIcon={<BookOpen size={18} />}
                                 sx={{
                                     color: 'white',
                                     textTransform: 'none',
                                     fontWeight: 500,
+                                    bgcolor: isActive('/') ? 'rgba(255,255,255,0.1)' : 'transparent',
+                                    '&:hover': {
+                                        bgcolor: 'rgba(255,255,255,0.1)',
+                                    },
                                 }}
                             >
                                 Mis Cursos
                             </Button>
-                            {/* Puedes agregar más botones según necesites */}
+                            <Button
+                                onClick={() => navigate('/exams')}
+                                startIcon={<FileText size={18} />}
+                                sx={{
+                                    color: 'white',
+                                    textTransform: 'none',
+                                    fontWeight: 500,
+                                    bgcolor: isActive('/exams') ? 'rgba(255,255,255,0.1)' : 'transparent',
+                                    '&:hover': {
+                                        bgcolor: 'rgba(255,255,255,0.1)',
+                                    },
+                                }}
+                            >
+                                Exámenes
+                            </Button>
                         </Box>
                     </Box>
 
@@ -152,7 +177,7 @@ const Navbar = () => {
 
                             <MenuItem onClick={() => { handleMenuClose(); navigate('/'); }}>
                                 <Settings size={18} style={{ marginRight: 8 }} />
-                                Mis Cursos
+                                Configuración
                             </MenuItem>
 
                             <Divider />
